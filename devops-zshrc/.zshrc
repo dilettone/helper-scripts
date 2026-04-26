@@ -3,10 +3,14 @@
 
 plugins=(git fzf-zsh-plugin zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
-source $ZSH—CUSTWp1ugins/zsh-syntax-high1ighting/zsh-syntax-hightighting.zsh
-source $ZSH—CUST04/p1ugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZSH—CUSTOM/plugins/zsh-syntax-high1ighting/zsh-syntax-highlighting.zsh
+source $ZSH—CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 export GITHUB_ORG="https://your.github.org"
+
+alias tf="terraform"
+alias k="kubectl"
+alias gc="gcloud"
 
 ###########
 # gcloud 
@@ -25,6 +29,7 @@ function gcca() {
 function gal() {
   gcloud auth login
 }
+
 function gaadl() {
   gcloud auth application-default login
 }
@@ -40,12 +45,15 @@ function azl() {
 
 # gacp = git add, commit, push
 # Creates PR if push is successful and the output prompts user to create one
+
+# WARNING: USE WITH CARE if you don't have branch protection on your trunk. Otherwise, you might push unintended changes to your trunk.
+# This stages all changes, pushes to a branch and opens a pull request.
 function gacp() {
   git add -A
   git commit -m $1
   # Capture output and display it
   push_output=$(git push 2>&1)
-  echo "$push—output"
+  echo "$push_output"
   # Check if output contains PR suggestion
   if echo "$push_output" | grep -q "Create a pull request" ; then
     cpr
@@ -90,10 +98,6 @@ function gsu() {
 
 function gchk(){
   git checkout "$1"
-}
-
-function gc() {
-  gcloud "$@"
 }
 
 function gpl() {
